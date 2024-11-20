@@ -1,16 +1,19 @@
 import re
+import sys
 
 def validate(passwd):
     # password must be between 6 and 20 char, one lowercase, one uppercase, one digit, one special char
-    reg = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!#%*?&]{6,20}$"
+    reg = r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!#%*?&]{6,20}$"
     
-    comp = re.compile(reg)
-    
-    search = re.search(comp, passwd)
-    
-    if search:
+    if re.fullmatch(reg, passwd):
         print("Password is valid.")
     else:
         print("Password is invalid.")
+
+if __name__ == '__main__':
+    if len(sys.argv) < 2:
+        print("Usage: python3 validPassword.py '<password>'")
+        sys.exit(1)
     
-validate('Johndoe1234&')
+    password = sys.argv[1]
+    validate(password)
